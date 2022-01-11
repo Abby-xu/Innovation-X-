@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-innox-dev-01558-authRole",
+      "UnauthRoleArn": "arn:aws:iam::945585093390:role/amplify-innox-dev-01558-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::945585093390:role/amplify-innox-dev-01558-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-innox-dev-01558-deployment",
+      "UnauthRoleName": "amplify-innox-dev-01558-unauthRole",
+      "StackName": "amplify-innox-dev-01558",
+      "StackId": "arn:aws:cloudformation:us-east-2:945585093390:stack/amplify-innox-dev-01558/a46be770-5e37-11ec-9c35-067fbed6718e",
+      "AmplifyAppId": "d316wilubm1unj"
+    }
+  }
+}
