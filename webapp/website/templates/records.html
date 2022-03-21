@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+	<meta name="author" content="AdminKit">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='img/icons/icon-48x48.png') }}" />
+
+	<link rel="canonical" href="https://demo-basic.adminkit.io/" />
+
+	<title>Records | SDSP</title>
+
+	<link id="mystylesheet", href="static/css/app.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+	<div class="wrapper">
+		<nav id="sidebar" class="sidebar js-sidebar">
+			<div class="sidebar-content js-simplebar">
+					<a class="sidebar-brand" href="index.html">
+          <span class="align-middle">SDSP</span>
+        </a>
+				<ul class="sidebar-nav">
+					<li class="sidebar-header">
+						Pages
+					</li>
+
+					<li class="sidebar-item">
+                        <a class="sidebar-link" href="index.html">
+                            <i class="align-middle" data-feather="home"></i> <span class="align-middle">Home</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="analysis.html">
+                            <i class="align-middle" data-feather="activity"></i> <span class="align-middle">Analysis</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="records.html">
+                            <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Records</span>
+                        </a>
+                    </li>
+		</nav>
+
+		<div class="main">
+			<nav class="navbar navbar-expand navbar-light navbar-bg">
+				<a class="sidebar-toggle js-sidebar-toggle">
+          <i class="hamburger align-self-center"></i>
+        </a>
+
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav navbar-align">
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+                <i class="align-middle" data-feather="settings"></i>
+              </a>
+
+							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                <img src="{% if name %}{{ url_for('static', filename='img/avatars/avatar.jpg') }}{% else %}{{url_for('static', filename='img/avatars/undefined.png')}}{% endif %}" class="avatar img-fluid rounded me-1" alt="Charles Hall" /> <span class="text-dark">{% if name %}{{name}}{% else %}unregistered{% endif %}</span>
+              </a>
+							<div class="dropdown-menu dropdown-menu-end">
+								<a class="dropdown-item" href="profile.html"><i class="align-middle me-1" data-feather="user"></i> Settings</a>
+								<a class="dropdown-item" href="help.html"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>
+								<button class="btn" onclick="swapStyles('/static/css/dark.css')"><i data-feather="moon"></i></button>
+								<button class="btn" onclick="swapStyles('static/css/app.css')"><i data-feather="sun"></i></button>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="logout">Log out</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+
+			<main class="content">
+			  <div class="container-fluid p-0">
+				
+				<h1 class="h3 mb-3"><strong>Records</strong></h1>
+					
+				<div class="row">
+				  <div class="col-12 justify-content-evenly d-flex">
+					<div class="col-5">
+
+					  <div class="card">
+						<div class="card-body">
+							<div class="row">
+								<div class="col mt-0">
+									<h1 class="card-header text-black-50"><strong>placeholder</strong></h1>
+								</div>
+								<div class="col-auto">
+									<div class="stat text-primary">
+									  <i data-feather="edit"></i>
+									</div>
+								  </div>
+							</div>
+						</div>
+					  </div>
+
+					  <div class="row">
+						<div class="col-12 d-flex">
+						  <div class="card flex-fill table-response h-100">
+							<div class="card-body">
+								<div class="row">
+								<div class="col mt-0">
+									<h1 class="card-header text-black-50"><strong>Records List</strong></h1>
+								</div>
+								<div class="col-auto">
+									<div class="stat text-primary">
+									<i class="align-middle" data-feather="file-text"></i>
+									</div>
+								</div>
+								</div>
+							</div>
+							<table class="table table-hover my-0 text-center" id="foodTable">
+							  <thead>
+								<tr>
+								  <!-- <th scope="col">Food</th>
+								  <th scope="col">Calories</th>
+								  <th scope="col">Carbs</th>
+								  <th scope="col">Fats</th>
+								  <th scope="col">Protein</th>
+								  <th scope="col">Sodium</th>
+								  <th scope="col">Cholesterol</th> -->
+								  <th scope="col">The array</th>
+								</tr>
+							  </thead>
+							</table>
+						  </div>
+						</div>
+					  </div>
+
+					</div>
+
+					<div class="col-6 col-md-6 col-xxl-5 d-flex">
+						<div class="card flex-fill h-100 w-100">
+						  <div class="card-body">
+
+							  <div class="row">
+								<div class="col mt-0">
+								  <h1 class="card-header text-black-50"><strong>Calendar</strong></h1>
+								</div>
+								<div class="col-auto">
+								  <div class="stat text-primary">
+									<i data-feather="calendar"></i>
+								  </div>
+								</div>
+							  </div>
+						      <div class="chart">
+							    <div id="datetimepicker-dashboard"></div>
+						      </div>
+						    </div>
+						  </div>
+					    </div>
+					</div>
+				</div>
+			</main>
+
+
+			<footer class="footer">
+				<div class="container-fluid">
+					<div class="row text-muted">
+						<div class="col-6 text-start">
+							<p class="mb-0">
+								<a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>SDSP</strong></a> &copy;
+							</p>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+
+	<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+	<script>
+		function addFood(cell_foodName,calorie,carb,fat,protein,sodium,cholesterol) {
+			var i = 1 ;
+			var row = foodTable.insertRow(i);
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+			var cell5 = row.insertCell(4);
+			var cell6 = row.insertCell(5);
+			var cell7 = row.insertCell(6);
+			
+			
+			cell1.innerHTML = cell_foodName;
+			cell2.innerHTML = Math.round(calorie);
+			cell3.innerHTML = Math.round(carb);
+			cell4.innerHTML = Math.round(fat);
+			cell5.innerHTML = Math.round(protein);
+			cell6.innerHTML = Math.round(sodium);
+			cell7.innerHTML = Math.round(cholesterol);
+		}
+	</script>
+
+<script>
+	function initChangeDetection(form) {
+	  Array.from(form).forEach(el => el.dataset.origValue = el.value);
+	}
+	function formHasChanges(form) {
+	  return Array.from(form).some(el => 'origValue' in el.dataset && el.dataset.origValue !== el.value);
+	}
+	function submit_form(form_data,server_url){
+		form_response={}
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", server_url,false);
+		xhr.onload = function(event){ 
+			//alert("Success, server responded with: " + event.target.response); // raw response
+			//document.getElementById("auto_complete_list") 
+			//console.log(event.target.response);
+			form_response=JSON.parse(event.target.response);
+		}; 
+		// or onerror, onabort
+		xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+		xhr.send(JSON.stringify(form_data));
+		return form_response;
+	}
+	//update autocomplete list
+	async function set_auto_complete(){
+		var food_options=submit_form(
+		{
+			"name":document.getElementById("name").value,
+		},
+		"/nutrition/get_auto_complete"
+		)["response"].split("\n");
+	
+		option_html='';
+		//food_options.forEach(element => option_html+='<option value="'+element+'" onselect="option_clicked(\''+element+'\')"/>');
+		//food_options.forEach(element => option_html+='<option value="'+element+'" onselect="alert(\'hi\')"/>');
+		food_options.forEach(element => option_html+='<option value="'+element+'"/>');
+		document.getElementById("food_options").innerHTML=option_html;
+	}
+
+	func_arr=[]
+	date_arr=[]
+	add_all_calendar_action=function(){
+		elements=Array.from(document.getElementsByClassName("dayContainer")[0].children)
+		func_arr=[]
+		date_arr=[]
+		for(let i=0;i<elements.length;i++){
+
+			var cur_date_str=elements[i].getAttribute('aria-label')
+			date_arr.push(cur_date_str)
+			func_arr.push(function(){
+				//console.log(cur_date_str)
+				setup_intake_table(day=1,date=date_arr[i])
+			})
+
+
+			elements[i].addEventListener("click",func_arr[func_arr.length-1])
+		}
+
+		/*if(e.className=="flatpickr-day today selected"){
+			e.addEventListener("click",function(){setup_intake_table(1)});
+		}else{
+			e.addEventListener("click",function(){setup_intake_table(0)});
+		}*/
+
+	}
+
+	add_calendar_button_action=setTimeout(function(){
+		add_all_calendar_action()
+		document.getElementsByClassName("flatpickr-next-month")[0].addEventListener("click",function(){add_calendar_button_action})
+		document.getElementsByClassName("flatpickr-prev-month")[0].addEventListener("click",function(){add_calendar_button_action})
+	},200)
+	async function setup_intake_table(day=1,date=''){
+		console.log("setting up intake table"+(day)+date)
+		console.log(Array.from(document.getElementsByClassName("dayContainer")[0].children).map(function(e){if(e.className=="flatpickr-day today selected")return true;else return false;}).includes(true)?1:0)
+		response=submit_form(
+			{
+				"day":day,
+				"date":date,
+			},
+			"/nutrition/get_analysis"
+		)
+		
+		document.getElementById("foodTable").innerHTML='<thead> <tr> <th scope="col">x</th> <th scope="col">y</th> <th scope="col">z</th> <th scope="col">a</th> <th scope="col">b</th> <th scope="col">c</th> <th scope="col">d</th> </tr> </thead>'
+		//addFood(name,calorie,carb,fat,protein,sodium,cholesterol) {
+		response["data"].forEach(element=>addFood(
+			element["food_name"],
+			element["calorie"],
+			element["carb"],
+			element["fat"],
+			element["protein"],
+			element["sodium"],
+			0
+		))
+		setTimeout(add_all_calendar_action,1000)
+		console.log(response)
+	}
+	
+	//constantly pull food auto complete into food bar
+	async function setup_auto_complete(){
+		initChangeDetection(document.getElementById('food_name_form'));
+		while(true){
+			if(formHasChanges(document.getElementById('food_name_form'))){
+				//console.log("changed");
+				initChangeDetection(document.getElementById('food_name_form'));
+				await set_auto_complete();
+			}
+			await new Promise(resolve => setTimeout(resolve, 500));
+		}
+	}
+	
+	async function setup_unit_form(){
+		//console.log(document.getElementById("name").value)
+		var quantity_label_resp=submit_form(
+			{
+				"name":document.getElementById("name").value,
+			},
+			"/nutrition/get_quantity_label"
+		);
+	
+		console.log(quantity_label_resp)
+		//fill food id into text field
+		document.getElementById("foodId").innerHTML=quantity_label_resp["foodId"]
+	
+		//remove all existing options
+		var select_box = document.getElementById("measure");
+		while (select_box.length > 0) {
+		  select_box.remove(select_box.length-1);
+		}
+		//add in new options
+		quantity_label_resp["measuers"].forEach(function(element){
+			var option = document.createElement("option");
+			option.text = element[0];
+			select_box.add(option,select_box.length)
+		})
+	
+		//update global variable unit to measureId map
+		unit_to_measureId={}
+		quantity_label_resp["measuers"].forEach(element=>
+			unit_to_measureId[element[0]]=element[1]
+		)
+	}
+	
+	async function submit_food_entry(){
+		var nutritions=submit_form(
+			{
+				"foodName":document.getElementById("name").value,
+				"foodId":document.getElementById("foodId").innerHTML,
+				"measure":unit_to_measureId[document.getElementById("measure").value],
+				"quantity":document.getElementById("quantity").value
+			},
+			"/nutrition/get_nutrition"
+		)
+		//document.getElementById("nutrition_output").innerHTML=JSON.stringify(nutritions);
+		setup_intake_table();
+		console.log(nutritions)
+	}
+	function sleep(ms) {
+	  return new Promise(resolve => setTimeout(resolve, ms));
+	}
+	/*
+	async function update_intake_table(){
+				today_selected=true;
+		while(true){
+			sleep(1000);
+			if(Array.from(document.getElementsByClassName("dayContainer")[0].children).map(function(e){if(e.className=="flatpickr-day today selected")return true;else return false;}).includes(true)!=today_selected)console.log(Array.from(document.getElementsByClassName("dayContainer")[0].children).map(function(e){if(e.className=="flatpickr-day today selected")return true;else return false;}).includes(true))
+		}
+	}
+	*/
+	document.onreadystatechange = async function () {
+	  if (document.readyState == "complete") {
+		  Array.from(document.getElementsByClassName("dayContainer")[0].children).forEach(function(e){if(e.className=="flatpickr-day today")e.className="flatpickr-day today selected"})
+
+		  
+		  
+
+		  setup_auto_complete();
+		  setup_intake_table();
+		  document.getElementsByClassName("flatpickr-next-month")[0].addEventListener("click",function(){setTimeout(add_all_calendar_action,200)})
+		  document.getElementsByClassName("flatpickr-prev-month")[0].addEventListener("click",function(){setTimeout(add_all_calendar_action,200)})
+		  //setTimeout(update_intake_table(),1000);
+		  //setup_food_input();
+	  }
+	}
+	</script>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
+			var gradient = ctx.createLinearGradient(0, 0, 0, 225);
+			gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
+			gradient.addColorStop(1, "rgba(215, 227, 244, 0)");
+			// Line chart
+			new Chart(document.getElementById("chartjs-dashboard-line"), {
+				type: "line",
+				data: {
+					labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+					datasets: [{
+						label: "Sales ($)",
+						fill: true,
+						backgroundColor: gradient,
+						borderColor: window.theme.primary,
+						data: [
+							2115,
+							1562,
+							1584,
+							1892,
+							1587,
+							1923,
+							2566,
+							2448,
+							2805,
+							3438,
+							2917,
+							3327
+						]
+					}]
+				},
+				options: {
+					maintainAspectRatio: false,
+					legend: {
+						display: false
+					},
+					tooltips: {
+						intersect: false
+					},
+					hover: {
+						intersect: true
+					},
+					plugins: {
+						filler: {
+							propagate: false
+						}
+					},
+					scales: {
+						xAxes: [{
+							reverse: true,
+							gridLines: {
+								color: "rgba(0,0,0,0.0)"
+							}
+						}],
+						yAxes: [{
+							ticks: {
+								stepSize: 1000
+							},
+							display: true,
+							borderDash: [3, 3],
+							gridLines: {
+								color: "rgba(0,0,0,0.0)"
+							}
+						}]
+					}
+				}
+			});
+		});
+	</script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			// Pie chart
+			new Chart(document.getElementById("chartjs-dashboard-pie"), {
+				type: "pie",
+				data: {
+					labels: ["Cups Drank", "Cups Remaining"],
+					datasets: [{
+						data: [5, 3],
+						backgroundColor: [
+							window.theme.primary,
+							window.theme.warning
+						],
+						borderWidth: 5
+					}]
+				},
+				options: {
+					responsive: !window.MSInputMethodContext,
+					maintainAspectRatio: false,
+					legend: {
+						display: false
+					},
+					cutoutPercentage: 75
+				}
+			});
+		});
+	</script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			// Bar chart
+			new Chart(document.getElementById("chartjs-dashboard-bar"), {
+				type: "bar",
+				data: {
+					labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+					datasets: [{
+						label: "This year",
+						backgroundColor: window.theme.primary,
+						borderColor: window.theme.primary,
+						hoverBackgroundColor: window.theme.primary,
+						hoverBorderColor: window.theme.primary,
+						data: [54, 67, 41, 55, 62, 45, 55, 73, 60, 76, 48, 79],
+						barPercentage: .75,
+						categoryPercentage: .5
+					}]
+				},
+				options: {
+					maintainAspectRatio: false,
+					legend: {
+						display: false
+					},
+					scales: {
+						yAxes: [{
+							gridLines: {
+								display: false
+							},
+							stacked: false,
+							ticks: {
+								stepSize: 20
+							}
+						}],
+						xAxes: [{
+							stacked: false,
+							gridLines: {
+								color: "transparent"
+							}
+						}]
+					}
+				}
+			});
+		});
+	</script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			var markers = [{
+					coords: [31.230391, 121.473701],
+					name: "Shanghai"
+				},
+				{
+					coords: [28.704060, 77.102493],
+					name: "Delhi"
+				},
+				{
+					coords: [6.524379, 3.379206],
+					name: "Lagos"
+				},
+				{
+					coords: [35.689487, 139.691711],
+					name: "Tokyo"
+				},
+				{
+					coords: [23.129110, 113.264381],
+					name: "Guangzhou"
+				},
+				{
+					coords: [40.7127837, -74.0059413],
+					name: "New York"
+				},
+				{
+					coords: [34.052235, -118.243683],
+					name: "Los Angeles"
+				},
+				{
+					coords: [41.878113, -87.629799],
+					name: "Chicago"
+				},
+				{
+					coords: [51.507351, -0.127758],
+					name: "London"
+				},
+				{
+					coords: [40.416775, -3.703790],
+					name: "Madrid "
+				}
+			];
+			var map = new jsVectorMap({
+				map: "world",
+				selector: "#world_map",
+				zoomButtons: true,
+				markers: markers,
+				markerStyle: {
+					initial: {
+						r: 9,
+						strokeWidth: 7,
+						stokeOpacity: .4,
+						fill: window.theme.primary
+					},
+					hover: {
+						fill: window.theme.primary,
+						stroke: window.theme.primary
+					}
+				},
+				zoomOnScroll: false
+			});
+			window.addEventListener("resize", () => {
+				map.updateSize();
+			});
+		});
+	</script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			var date = new Date(Date.now() * 24 * 60 * 60 * 1000);
+			var defaultDate = date.getUTCFullYear() + "-" + (date.getUTCMonth() + 1) + "-" + date.getUTCDate();
+			document.getElementById("datetimepicker-dashboard").flatpickr({
+				inline: true,
+				prevArrow: "<span title=\"Previous month\">&laquo;</span>",
+				nextArrow: "<span title=\"Next month\">&raquo;</span>",
+				defaultDate: defaultDate
+			});
+		});
+	</script>
+	<script src="static/darkmode.js"></script>
+
+</body>
+
+</html>

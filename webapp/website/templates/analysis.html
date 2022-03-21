@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+	<meta name="author" content="AdminKit">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='img/icons/icon-48x48.png') }}" />
+
+	<link rel="canonical" href="https://demo-basic.adminkit.io/" />
+
+	<title>Analysis | SDSP</title>
+
+	<link id="mystylesheet", href="static/css/app.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+	<div class="wrapper">
+		<nav id="sidebar" class="sidebar js-sidebar">
+			<div class="sidebar-content js-simplebar">
+					<a class="sidebar-brand" href="index.html">
+          <span class="align-middle">SDSP</span>
+        </a>
+
+				<ul class="sidebar-nav">
+					<li class="sidebar-header">
+						Pages
+					</li>
+
+					<li class="sidebar-item">
+                        <a class="sidebar-link" href="index.html">
+                            <i class="align-middle" data-feather="home"></i> <span class="align-middle">Home</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="analysis.html">
+                            <i class="align-middle" data-feather="activity"></i> <span class="align-middle">Analysis</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="records.html">
+                            <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Records</span>
+                        </a>
+                    </li>
+			</nav>
+			<div class="main">
+				<nav class="navbar navbar-expand navbar-light navbar-bg">
+					<a class="sidebar-toggle js-sidebar-toggle">
+          		<i class="hamburger align-self-center"></i>
+       		 </a>
+
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav navbar-align">				
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+                <i class="align-middle" data-feather="settings"></i>
+              </a>
+
+							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                <img src="{% if name %}{{ url_for('static', filename='img/avatars/avatar.jpg') }}{% else %}{{url_for('static', filename='img/avatars/undefined.png')}}{% endif %}" class="avatar img-fluid rounded me-1" alt="Charles Hall" /> <span class="text-dark">{% if name %}{{name}}{% else %}unregistered{% endif %}</span>
+              </a>
+							<div class="dropdown-menu dropdown-menu-end">
+								<a class="dropdown-item" href="profile.html"><i class="align-middle me-1" data-feather="user"></i> Settings</a>
+								<a class="dropdown-item" href="help.html"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>
+								<button class="btn" onclick="swapStyles('/static/css/dark.css')"><i data-feather="moon"></i></button>
+								<button class="btn" onclick="swapStyles('static/css/app.css')"><i data-feather="sun"></i></button>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="logout">Log out</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+
+			<main class="content">
+				<div class="container-fluid p-0">
+
+					<h1 class="h3 mb-3"><strong>Analysis</strong></h1>
+
+				<div class="card">
+					<div class="card-body">
+						<body>
+							<form id="upload-form" action="{{ url_for('views.upload') }}" method="POST" enctype="multipart/form-data">
+								<h4 class="text-muted"><strong>
+									Upload your images here, please remember the name of your file:
+								</strong></h4>
+								<br><br>
+								<input id="file-picker" type="file" name="file" accept="image/*" multiple>
+								<div id="msg"></div>
+								<br><br>
+								<input type="submit" value="Upload" id="upload-button">
+							</form>
+						</body>
+					</div>
+				</div>
+
+				<div class="card">
+					<div class="card-body">
+						<body>
+							<h4 class="text-muted"><strong>
+								After upload your images, input the name of your file and click the button below to process the image:
+							</strong></h4>
+							<div class="col-7">
+								<form id="scan-form" action="{{ url_for('views.scan') }}" method="POST" enctype="multipart/form-data">
+									<strong>Uploaded file name:</strong>
+									<input class="mx-auto" type="text" name="file_name">
+									<br><br>
+									<input type="submit" value="Scan" id="scan-button">
+								</form>
+							</div>
+						</body>
+					</div>
+				</div>
+
+				<div class="card">
+					<div class="card-body">
+						<body>
+							<h1 class="h3 mb-3"><strong>Result</strong></h1>
+							<p>{{results}}</p>
+						</body>
+					</div>
+				</div>
+					
+				
+				</div>
+			</main>
+
+			<footer class="footer">
+				<div class="container-fluid">
+					<div class="row text-muted">
+						<div class="col-6 text-start">
+							<p class="mb-0">
+								<a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>SDSP</strong></a> &copy;
+							</p>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+
+	<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+	<script>
+		// used for get the avariables
+
+		function submit_form(form_data,server_url){
+			form_response={}
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", server_url,false);
+			xhr.onload = function(event){ 
+				//alert("Success, server responded with: " + event.target.response); // raw response
+				//document.getElementById("auto_complete_list") 
+				//console.log(event.target.response);
+				form_response=JSON.parse(event.target.response);
+			}; 
+			// or onerror, onabort
+			xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			xhr.send(JSON.stringify(form_data));
+			return form_response;
+		}
+
+		document.onreadystatechange = async function () {
+		  if (document.readyState == "complete") {
+			pass
+		  }
+		}
+
+	</script>
+</body>
+
+</html>
