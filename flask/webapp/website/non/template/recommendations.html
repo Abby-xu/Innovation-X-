@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+	<meta name="author" content="AdminKit">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='img/icons/icon-48x48.png') }}" />
+
+	<link rel="canonical" href="https://demo-basic.adminkit.io/profile.html" />
+
+	<title>Recommendations | Nutritist</title>
+
+	<link id="mystylesheet", href="static/css/app.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+	<div class="wrapper">
+		<nav id="sidebar" class="sidebar js-sidebar">
+			<div class="sidebar-content js-simplebar">
+					<a class="sidebar-brand" href="index.html">
+          <span class="align-middle">nutritist</span>
+        </a>
+
+				<ul class="sidebar-nav">
+					<li class="sidebar-header">
+						Pages
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="index.html">
+              <i class="align-middle" data-feather="home"></i> <span class="align-middle">Home</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="tracking.html">
+              <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Tracking</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="analysis.html">
+              <i class="align-middle" data-feather="activity"></i> <span class="align-middle">Analysis</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item active">
+						<a class="sidebar-link" href="recommendations.html">
+              <i class="align-middle" data-feather="book"></i>Recommendations<span class="align-middle"></span>
+            </a>
+					</li>
+		</nav>
+
+		<div class="main">
+			<nav class="navbar navbar-expand navbar-light navbar-bg">
+				<a class="sidebar-toggle js-sidebar-toggle">
+          <i class="hamburger align-self-center"></i>
+        </a>
+
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav navbar-align">
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+                <i class="align-middle" data-feather="settings"></i>
+              </a>
+
+							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                <img src="{% if name %}{{ url_for('static', filename='img/avatars/avatar.jpg') }}{% else %}{{url_for('static', filename='img/avatars/undefined.png')}}{% endif %}" class="avatar img-fluid rounded me-1" alt="Charles Hall" /> <span class="text-dark">{% if name %}{{name}}{% else %}unregistered{% endif %}</span>
+              </a>
+							<div class="dropdown-menu dropdown-menu-end">
+								<a class="dropdown-item" href="profile.html"><i class="align-middle me-1" data-feather="user"></i> Settings</a>
+								<a class="dropdown-item" href="help.html"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>
+								<button class="btn" onclick="swapStyles('/static/css/dark.css')"><i data-feather="moon"></i></button>
+								<button class="btn" onclick="swapStyles('static/css/app.css')"><i data-feather="sun"></i></button>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="logout">Log out</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+
+			<main class="content">
+				<div class="container-fluid p-0">
+
+					<div class="mb-3">
+						<h1 class="h3 d-inline align-middle">Recommendations</h1>
+					</div>
+
+					<!--Card for recipe search feature-->
+					<div class="card">
+						<div class="card-body">
+							<div class="row">
+								<div class="col mt-0">
+									<h1 class="card-header text-black-50"><strong>Recipe Search</strong></h1>
+								</div>
+								<div class="col-auto">
+									<div class="stat text-primary">
+										<i class="align-middle" data-feather="search"></i>
+									</div>
+								</div>
+							</div>
+
+
+
+					  <div class="row justify-content-md-center">
+
+						<!--Food Search Bar-->
+						<div class="col-2">
+						  <h3>Enter food:</h3>
+						  <form id="food_to_search">
+							<!-- <label for="fname">Enter a food to search: </label> -->
+							<input type="text" list="recipes" id="q" name="q"><br>
+							<datalist id="recipes"></datalist>
+						  </form>
+						</div>
+						
+						<div class="col-2 justify-content-md-center">
+						  
+							<h3>Cuisine Type:</h3>
+							<div>
+								<select class="mdb-select colorful-select dropdown-primary md-form" multiple searchable="Search here.." id="cuisine_type">
+								<!-- <option value="" disabled selected>Select Cuisine Types</option> -->
+								<option value="American">American</option>
+								<option value="Asian">Asian</option>
+								<option value="British">British</option>
+								<option value="Caribbean">Caribbean</option>
+								<option value="Central Europe">Central Europe</option>
+								<option value="Chinese">Chinese</option>
+								<option value="Eastern Europe">Eastern Europe</option>
+								<option value="French">French</option>
+								<option value="Indian">Indian</option>
+								<option value="Italian">Italian</option>
+								<option value="Japanese">Japanese</option>
+								<option value="Kosher">Kosher</option>
+								<option value="Mediterranean">Mediterranean</option>
+								<option value="Mexican">Mexican</option>
+								<option value="Middle Eastern">Middle Eastern</option>
+								<option value="Nordic">Nordic</option>
+								<option value="South American">South American</option>
+								<option value="South East Asian">South East Asian</option>
+								</select>
+							</div>
+						
+						  </div>
+
+						  <div class="col-2">
+
+							  <h3>Meal Type:</h3>
+							  <select class="mdb-select colorful-select dropdown-primary md-form" multiple searchable="Search here.." id="meal_type">
+								<!-- <option value="" disabled selected>Select Meal Types</option> -->
+								<option value="Breakfast">Breakfast</option>
+								<option value="Lunch">Lunch</option>
+								<option value="Dinner">Dinner</option>
+								<option value="Snack">Snack</option>
+								<option value="Teatime">Teatime</option>
+							  </select>
+						  
+							</div>
+						<!-- </div>
+						</div> -->
+
+
+						<!--Cuisine Type Dropdown-->
+						<!-- <div class="col">
+						  <form>
+							<div class="dropdown">
+							  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+								Cruisine Types
+							  </button>
+							  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+							  	{% for i in cruisine_types %}
+							  	<li><a class="dropdown-item" href="#">{{i}}</a></li>
+							  	{% endfor %}
+							  </ul>
+							</div>
+						  </form>
+						</div> -->
+								
+						<!--Dish Type Dropdown-->
+						<!-- <div class="col">
+						  <form>
+							<div class="dropdown">
+							  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+								Meal Types
+							  </button>
+							  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+								{% for i in meal_types %}
+							  	<li><a class="dropdown-item" href="#">{{i}}</a></li>
+							  	{% endfor %}
+							  </ul>
+							</div>
+						  </form>
+						</div> -->
+						
+						<!--Submit Button-->
+						<div class="row justify-content-md-center mt-3">
+						  <div class="col-2">
+						    <button type="button" class="btn btn-primary btn-lg" onclick="search_recipes()">Find Me Recipes!</button>
+						  </div>
+					    </div>
+					  </div>
+
+					  <div class="row">
+						<p id="q"></p>
+					  </div>
+					</div>
+				</div>
+
+					<!--Different Card for random recipes-->
+					<div class="card">
+
+						<div class="card-body">
+							<div class="row">
+								<div class="col mt-0">
+									<h1 class="card-header text-black-50"><strong>Random Recipes</strong></h1>
+								</div>
+								<div class="col-auto">
+									<div class="stat text-primary">
+										<i class="align-middle" data-feather="search"></i>
+									</div>
+								</div>
+							</div>
+
+
+						<div class="row justify-content-md-center">
+						  <div class="col-4">
+							<h2 class="text-black-50"><strong>Find me random healthy recipes!</strong></h2>
+						  </div>
+						</div>
+						<div class="row justify-content-md-center">
+						  <div class="col-2">
+							<!-- <input type="submit" value="Go!" name="confirm foods" onclick="random_recipes()"> -->
+							<button type="button" class="btn btn-primary btn-lg" onclick="random_recipes()">Find Me Recipes!</button>
+						  </div>
+						</div>
+					  </div>
+					</div>
+					
+					<!--Potential Output Area?-->
+					<div class="card">
+						<div id="recipe_output">
+						  <div id="bottom_output">
+  
+						  </div>
+						</div>
+					  </div>
+
+				</div>
+			</main>
+					<!-- <div class="row">
+						<div class="col-md-8 col-xl-9">
+							<div class="card">
+								<div class="card-header">
+
+									<h5 class="card-title mb-0">Activities</h5>
+								</div>
+								<div class="card-body h-100">
+									<div class="d-flex align-items-start">
+										<img src="{{ url_for('static', filename='img/avatars/avatar-2.jpg') }}" width="36" height="36" class="rounded-circle me-2" alt="William Harris">
+										<div class="flex-grow-1">
+											<small class="float-end text-navy">3h ago</small>
+											<strong>William Harris</strong> posted a new Mediterranean recipe: <strong>Greek Salad with Hummus</strong><br />
+											<small class="text-muted">Today 5:12 pm</small>
+
+											<div class="row g-0 mt-1">
+												<div class="col-6 col-md-4 col-lg-4 col-xl-3">
+													<img src="{{ url_for('static', filename='img/photos/greek.jpg') }}" class="img-fluid pe-2" alt="Unsplash">
+												</div>
+												<div class="col-6 col-md-4 col-lg-4 col-xl-3">
+													<img src="{{ url_for('static', filename='img/photos/salad.jpg') }}" class="img-fluid pe-2" alt="Unsplash">
+												</div>
+											</div>
+
+											<a href="#" class="btn btn-sm btn-danger mt-1"><i class="feather-sm" data-feather="heart"></i> Like</a>
+										</div>
+									</div>
+
+									<hr />
+									<div class="d-flex align-items-start">
+										<img src="{{ url_for('static', filename='img/avatars/avatar-3.jpg') }}" width="36" height="36" class="rounded-circle me-2" alt="William Harris">
+										<div class="flex-grow-1">
+											<small class="float-end text-navy">3h ago</small>
+											<strong>Based on your diet:</strong> for lunch: <strong>Oven Baked Garlic Salmon</strong><br />
+											<small class="text-muted">Today 5:12 pm</small>
+
+											<div class="row g-0 mt-1">
+												<div class="col-6 col-md-4 col-lg-4 col-xl-3">
+													<img src="{{ url_for('static', filename='img/photos/oven.jpg') }}" class="img-fluid pe-2" alt="Unsplash">
+												</div>
+												<div class="col-6 col-md-4 col-lg-4 col-xl-3">
+													<img src="{{ url_for('static', filename='img/photos/salmon.jpg') }}" class="img-fluid pe-2" alt="Unsplash">
+												</div>
+											</div>
+
+											<a href="#" class="btn btn-sm btn-danger mt-1"><i class="feather-sm" data-feather="heart"></i> Like</a>
+										</div>
+									</div>
+
+									<hr />
+									<div class="d-flex align-items-start">
+										<img src="{{ url_for('static', filename='img/avatars/avatar-4.jpg') }}" width="36" height="36" class="rounded-circle me-2" alt="William Harris">
+										<div class="flex-grow-1">
+											<small class="float-end text-navy">3h ago</small>
+											<strong>Christina Mason</strong> posted a breakfast recipe: <strong>Chia seed granola</strong><br />
+											<small class="text-muted">Today 5:12 pm</small>
+
+											<div class="row g-0 mt-1">
+												<div class="col-6 col-md-4 col-lg-4 col-xl-3">
+													<img src="{{ url_for('static', filename='img/photos/chia.jpg') }}" class="img-fluid pe-2" alt="Unsplash">
+												</div>
+												<div class="col-6 col-md-4 col-lg-4 col-xl-3">
+													<img src="{{ url_for('static', filename='img/photos/granola.jpg') }}" class="img-fluid pe-2" alt="Unsplash">
+												</div>
+											</div>
+
+											<a href="#" class="btn btn-sm btn-danger mt-1"><i class="feather-sm" data-feather="heart"></i> Like</a>
+										</div>
+									</div>
+									<hr />
+									<div class="d-grid">
+										<a href="#" class="btn btn-primary">Load more</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div> -->
+					
+
+			<footer class="footer">
+				<div class="container-fluid">
+					<div class="row text-muted">
+						<div class="col-6 text-start">
+							<p class="mb-0">
+								<a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>nutritist</strong></a> &copy;
+							</p>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+
+	<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+	<script>
+		function addRecipe(recipeName, recipeImage, recipeLink, cuisineType, totalCalories, cookTime, ingredientList) {
+			const newDiv = document.createElement("div");
+			newDiv.setAttribute("class", "row");
+
+			// const recipeIMG = document.createTextNode(recipeImage);
+			// newDiv.appendChild(recipeIMG);
+
+			// var title = document.createElement('h3');
+			// title.innerHTML = "Recipe:"
+			// newDiv.appendChild(title);
+			const imageCol = document.createElement("div");
+			imageCol.setAttribute("class", "col-2");
+			var image = document.createElement('img');
+			image.src = recipeImage;
+			image.setAttribute("class", "img-thumbnail")
+			imageCol.appendChild(image);
+			newDiv.appendChild(imageCol);
+
+			const textCol = document.createElement("div");
+			textCol.setAttribute("class", "col");
+
+			// const title = document.createElement("h2");
+			// title.innerHTML = "<strong>" + recipeName + "</strong>";
+			// textCol.appendChild(title);
+
+			const linkHeader = document.createElement("h1");
+			var link = document.createElement('a');
+			var linkText = document.createTextNode(recipeName);
+			link.appendChild(linkText);
+			link.title = "Link to Recipe";
+			link.href = recipeLink;
+			linkHeader.appendChild(link);
+			textCol.appendChild(linkHeader);
+			// newDiv.appendChild(textCol);
+			// var bbreak1 = document.createElement('br');
+			// textCol.appendChild(bbreak1);
+
+			const cuisineHeader = document.createElement("h3");
+			var cuisine = "Cuisine Type: " + cuisineType;
+			cuisine = cuisine.replace('[', '');
+			cuisine = cuisine.replace('\'', '');
+			cuisine = cuisine.replace(']', '');
+			cuisine = cuisine.replace('\'', '');
+			cuisineHeader.innerHTML = cuisine;
+			textCol.appendChild(cuisineHeader);
+			// var bbreak2 = document.createElement('br');
+			// textCol.appendChild(bbreak2);
+			//newDiv.appendChild(textCol);
+
+			const calorieHeader = document.createElement("h3");
+			var calories = "Total Calories: " + Math.round(totalCalories);
+			calorieHeader.innerHTML = calories;
+			//const totalCals = document.createTextNode(totalCalories);
+			textCol.appendChild(calorieHeader);
+
+			const time = document.createElement("h3");
+			time.innerHTML = "Cooking Time: " + cookTime;
+			textCol.appendChild(time);
+
+			const iList = document.createElement("h5");
+			iList.innerHTML = "Ingredient List: " + ingredientList;
+			textCol.appendChild(iList);
+			newDiv.appendChild(textCol);
+
+			const bottomOfOutput = document.getElementById('bottom_output');
+			const outputArea = document.getElementById('recipe_output');
+			outputArea.insertBefore(newDiv, bottomOfOutput);
+		}
+	</script>
+
+	<script>
+		function getDropDownValue(dropdown)
+		{
+			let returnList = [];
+			givenDropDown = document.getElementById(dropdown);
+			var options = givenDropDown && givenDropDown.options;
+			var opt;
+
+			for (var i=0, iLen=options.length; i<iLen; i++) {
+				opt = options[i];
+
+				if (opt.selected) {
+					returnList.push(opt.value || opt.text);
+				}
+			}
+			
+			if(returnList.length > 0 && returnList[0].indexOf("Select Cuisine Types") > -1)
+				returnList.splice(0, 1);
+
+			return returnList;
+		}
+	</script>
+
+	<script>
+
+		function initChangeDetection(form) {
+		  Array.from(form).forEach(el => el.dataset.origValue = el.value);
+		}
+		function formHasChanges(form) {
+		  return Array.from(form).some(el => 'origValue' in el.dataset && el.dataset.origValue !== el.value);
+		}
+		
+		function submit_form(form_data,server_url){
+			form_response={}
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", server_url,false);
+			xhr.onload = function(event){ 
+				//alert("Success, server responded with: " + event.target.response); // raw response
+				//document.getElementById("auto_complete_list") 
+				//console.log(event.target.response);
+				form_response=JSON.parse(event.target.response);
+			}; 
+			// or onerror, onabort
+			xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			xhr.send(JSON.stringify(form_data));
+			return form_response;
+		}
+		
+		//update autocomplete list
+		async function search_recipes() {
+			//Get cuisine type and meal type lists
+			let cuisines = getDropDownValue("cuisine_type");
+			console.log(cuisines);
+			let meals = getDropDownValue("meal_type");
+			console.log(meals);
+
+			var recipes = submit_form(
+				{
+					"q":document.getElementById("q").value,
+					"a":cuisines,
+					"b":meals,       
+			},
+			"/nutrition/recipe_Search"
+			);
+		
+			document.getElementById('recipe_output').innerHTML = "";
+			bottom = document.createElement("div");
+			bottom.setAttribute("id", "bottom_output");
+			document.getElementById('recipe_output').appendChild(bottom);
+
+			recipes["response"].forEach(function(e){
+			  console.log((e["label"]))
+			  console.log((e["Ingredient List"]))
+			  console.log(e["Total Calories"])
+			  console.log(e["Total Time To Cook"])
+			  console.log(e["Link to Recipe"])
+			  console.log(eval(e["Cuisine Type"]))
+			  console.log(e["Image of Recipe"])
+			  addRecipe(e["label"], e["Image of Recipe"], e["Link to Recipe"], e["Cuisine Type"], e["Total Calories"], e["Total Time To Cook"], e["Ingredient List"])
+			})
+		}
+		async function random_recipes(){
+		  var recipes=submit_form({},"/nutrition/random_recipes");
+
+		  document.getElementById('recipe_output').innerHTML = "";
+		  bottom = document.createElement("div");
+		  bottom.setAttribute("id", "bottom_output");
+		  document.getElementById('recipe_output').appendChild(bottom);
+
+		  recipes["response"].forEach(function(e){
+			  console.log((e["Ingredient List"]))
+			  console.log(e["Total Calories"])
+			  console.log(e["Total Time To Cook"])
+			  console.log(e["Link to Recipe"])
+			  console.log(eval(e["Cuisine Type"]))
+			  console.log(e["Image of Recipe"])
+			  addRecipe(e["label"], e["Image of Recipe"], e["Link to Recipe"], e["Cuisine Type"], e["Total Calories"], e["Total Time To Cook"], e["Ingredient List"])
+			})
+		}
+		
+		document.onreadystatechange = async function () {
+		  if (document.readyState == "complete") {
+			  //search_recipes();
+			  //setup_food_input();
+		  }
+		}
+		
+		
+		</script>
+<script src="static/darkmode.js"></script>
+</body>
+
+</html>

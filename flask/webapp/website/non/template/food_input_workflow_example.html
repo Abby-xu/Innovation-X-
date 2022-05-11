@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>HTML Forms</h2>
+<script>
+function initChangeDetection(form) {
+  Array.from(form).forEach(el => el.dataset.origValue = el.value);
+}
+function formHasChanges(form) {
+  return Array.from(form).some(el => 'origValue' in el.dataset && el.dataset.origValue !== el.value);
+}
+function submit_form(form_data,server_url){
+	form_response={}
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", server_url,false);
+	xhr.onload = function(event){ 
+	    //alert("Success, server responded with: " + event.target.response); // raw response
+	    //document.getElementById("auto_complete_list") 
+	    //console.log(event.target.response);
+	    form_response=JSON.parse(event.target.response);
+	}; 
+	// or onerror, onabort
+	xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+	xhr.send(JSON.stringify(form_data));
+	return form_response;
+}
+//update autocomplete list
+async function set_auto_complete(){
+	var food_options=submit_form(
+	{
+		"name":document.getElementById("name").value,
+	},
+	"/nutrition/get_auto_complete"
+	)["response"].split("\n");
+
+	option_html='';
+	//food_options.forEach(element => option_html+='<option value="'+element+'" onselect="option_clicked(\''+element+'\')"/>');
+	//food_options.forEach(element => option_html+='<option value="'+element+'" onselect="alert(\'hi\')"/>');
+	food_options.forEach(element => option_html+='<option value="'+element+'"/>');
+	document.getElementById("food_options").innerHTML=option_html;
+}
+
+//constantly pull food auto complete into food bar
+async function setup_auto_complete(){
+    initChangeDetection(document.getElementById('food_name_form'));
+	while(true){
+		if(formHasChanges(document.getElementById('food_name_form'))){
+			//console.log("changed");
+			initChangeDetection(document.getElementById('food_name_form'));
+			await set_auto_complete();
+		}
+		await new Promise(resolve => setTimeout(resolve, 500));
+	}
+}
+
+async function setup_unit_form(){
+	//console.log(document.getElementById("name").value)
+	var quantity_label_resp=submit_form(
+		{
+			"name":document.getElementById("name").value,
+		},
+		"/nutrition/get_quantity_label"
+	);
+
+	console.log(quantity_label_resp)
+	//fill food id into text field
+	document.getElementById("foodId").innerHTML=quantity_label_resp["foodId"]
+
+	//remove all existing options
+	var select_box = document.getElementById("measure");
+	if (select_box.length > 0) {
+	  select_box.remove(select_box.length-1);
+	}
+	//add in new options
+	quantity_label_resp["measuers"].forEach(function(element){
+		var option = document.createElement("option");
+		option.text = element[0];
+		select_box.add(option,select_box.length)
+	})
+
+	//update global variable unit to measureId map
+	unit_to_measureId={}
+	quantity_label_resp["measuers"].forEach(element=>
+		unit_to_measureId[element[0]]=element[1]
+	)
+}
+
+async function submit_food_entry(){
+	var nutritions=submit_form(
+		{
+			"foodId":document.getElementById("foodId").innerHTML,
+			"measure":unit_to_measureId[document.getElementById("measure").value],
+			"quantity":document.getElementById("quantity").value
+		},
+		"/nutrition/get_nutrition"
+	)
+	document.getElementById("nutrition_output").innerHTML=JSON.stringify(nutritions);
+
+
+	console.log(document.getElementById("name").value)
+	console.log("Calories: "+nutritions["calories"])
+	console.log("Carbs: "+nutritions["totalNutrients"]["CHOCDF"]["quantity"]+nutritions["totalNutrients"]["CHOCDF"]["unit"])
+	console.log("Fats: "+nutritions["totalNutrients"]["FAT"]["quantity"]+nutritions["totalNutrients"]["FAT"]["unit"])
+	console.log("Protein: "+nutritions["totalNutrients"]["PROCNT"]["quantity"]+nutritions["totalNutrients"]["PROCNT"]["unit"])
+	console.log("Sodium: "+nutritions["totalNutrients"]["NA"]["quantity"]+nutritions["totalNutrients"]["NA"]["unit"])
+
+	console.log(nutritions)
+}
+document.onreadystatechange = async function () {
+  if (document.readyState == "complete") {
+  	setup_auto_complete();
+  	//setup_food_input();
+  }
+}
+</script>
+<form id="food_name_form">
+  <label for="fname">Food Name:</label><br>
+  <input type="text" list="food_options" id="name" name="name"><br>
+  <datalist id="food_options">
+  </datalist>
+</form> 
+<input type="submit" name="get units" onclick="setup_unit_form()" id="get_unit_button"\>
+
+  FoodId:<p id="foodId"></p>
+  <select id="measure" name="measure">
+  </select>
+  <label>Quantity</label>
+  <input type="text" list="food_options" id="quantity" name="quantity"><br>
+
+<input type="submit" name="confirm foods" onclick="submit_food_entry()">
+<p id="nutrition_output"></p>
+</body>
+</html>

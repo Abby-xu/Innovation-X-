@@ -5,11 +5,10 @@ from .models import Note
 from . import db
 import json
 from .account_utils import *
-from . import nutrition_utils
-from .record_utils import record_intake,get_past_intake_days,get_past_intake
 import os
 from flask import Flask, request, render_template, send_from_directory
 from .counter_utils import *
+from .record_utils import record_intake,get_past_intake_days
 
 views = Blueprint('views', __name__)
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -127,48 +126,25 @@ def profile():
 def admin():
     return redirect(url_for("home"))
 
-############ need to fix ##########
-
-@views.route("/nutrition/get_auto_complete",methods=['POST'])
-def get_auto_complete():
-    #print(request.json)
-    #return jsonify(response=str("\n".join(nutrition_utils.get_auto_complete(request.form.get('name')))))
-    return jsonify(response=str("\n".join(nutrition_utils.get_auto_complete(request.json["name"]))))
-    #return jsonify(response=str("\n".join(["fooda","foodb","foodc"])))
-
-@views.route("/nutrition/get_quantity_label",methods=['POST'])
-def get_quantity_label():
-    #return nutrition_utils.get_quantity_label(request.form.get('name'))
-    return nutrition_utils.get_quantity_label(request.json["name"])
+@login_required
+@views.route("/records/get_analysis",methods=['POST'])
+def get_analysis():
+    my_request=request.json
+    print(current_user.id,str(my_request["day"]),my_request["date"])
+    print(get_past_intake_days(current_user.id,str(my_request["day"]),end_date=my_request["date"]))
+    return get_past_intake_days(current_user.id,str(my_request["day"]),end_date=my_request["date"])
 
 #This method also input record into user's database
 @login_required
-@views.route("/nutrition/get_nutrition",methods=['POST'])
-def get_nutrition():
+@views.route("/records/get_records",methods=['POST'])
+def get_records():
     my_request=request.json
-    response= nutrition_utils.get_nutrition(str(my_request['foodId']),str(my_request['measure']),int(my_request['quantity']))
+    print(my_request)
+    # response= nutrition_utils.get_nutrition(str(my_request['foodId']),str(my_request['measure']),int(my_request['quantity']))
     
     record_intake(
         current_user.id,
-        my_request['foodName'],
-        response["calories"],
-        response["totalNutrients"]["CHOCDF"]["quantity"],
-        response["totalNutrients"]["FAT"]["quantity"],
-        response["totalNutrients"]["PROCNT"]["quantity"],
-        response["totalNutrients"]["NA"]["quantity"],
+        my_request['location'],
+        my_request['name'],
+        my_request['result'],
     )
-
-    return response
-
-@login_required
-@views.route("/nutrition/get_analysis",methods=['POST'])
-def get_analysis():
-    my_request=request.json
-    return get_past_intake_days(current_user.id,str(my_request["day"]),end_date=my_request["date"])
-
-@login_required
-@views.route("/nutrition/get_analysis_7",methods=['POST'])
-def get_analysis_7():
-    my_request=request.json
-#    return get_past_intake(current_user.id,str(my_request["day"]))
-    return get_past_intake(current_user.id,str(my_request["day"]))

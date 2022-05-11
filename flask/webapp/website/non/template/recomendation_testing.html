@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html>
+<style>
+  ui-multiselect {background:#fff !important;text-align: right !important;}
+  ui-multiselect-header {
+      background: lightgray !important;
+      text-align: right !important;
+  }
+  ui-multiselect-menu { 
+      text-align: right !important;
+  }
+
+</style>
+<body>
+
+<h2>Recipe Recommendations</h2>
+<script>
+
+function initChangeDetection(form) {
+  Array.from(form).forEach(el => el.dataset.origValue = el.value);
+}
+function formHasChanges(form) {
+  return Array.from(form).some(el => 'origValue' in el.dataset && el.dataset.origValue !== el.value);
+}
+
+function submit_form(form_data,server_url){
+	form_response={}
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", server_url,false);
+	xhr.onload = function(event){ 
+	    //alert("Success, server responded with: " + event.target.response); // raw response
+	    //document.getElementById("auto_complete_list") 
+	    //console.log(event.target.response);
+	    form_response=JSON.parse(event.target.response);
+	}; 
+	// or onerror, onabort
+	xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+	xhr.send(JSON.stringify(form_data));
+	return form_response;
+}
+
+//update autocomplete list
+async function search_recipes() {
+    var recipes = submit_form(
+        {
+            "q":document.getElementById("q").value,       
+    },
+    "/nutrition/recipe_Search"
+    );
+
+    recipes["response"].forEach(function(e){
+      console.log((e["Ingredient List"]))
+      console.log(e["Total Calories"])
+      console.log(e["Total Time To Cook"])
+      console.log(e["Link to Recipe"])
+      console.log(eval(e["Cuisine Type"]))
+      console.log(e["Image of Recipe"])
+    })
+}
+async function random_recipes(){
+  var recipes=submit_form({},"/nutrition/random_recipes");
+  recipes["response"].forEach(function(e){
+      console.log((e["Ingredient List"]))
+      console.log(e["Total Calories"])
+      console.log(e["Total Time To Cook"])
+      console.log(e["Link to Recipe"])
+      console.log(eval(e["Cuisine Type"]))
+      console.log(e["Image of Recipe"])
+    })
+}
+
+document.onreadystatechange = async function () {
+  if (document.readyState == "complete") {
+  	//search_recipes();
+  	//setup_food_input();
+  }
+}
+
+
+</script>
+<form id="food_to_search">
+  <label for="fname">Enter a food to search: </label><br>
+  <input type="text" list="recipes" id="q" name="q"><br>
+  <datalist id="recipes">
+  </datalist>
+</form>
+
+<form>
+  <label for="cuisine_type">Cuisine Type:</label>
+  <select name="cuisine_type" id="cuisine_type">
+    <option value="rigatoni">Rigatoni</option>
+    <option value="dave">Dave</option>
+    <option value="pumpernickel">Pumpernickel</option>
+    <option value="reeses">Reeses</option>
+  </select>
+</form>
+
+<form>
+  <label for="dish_type">Dish Type:</label>
+  <select name="dish_type" id="dish_type">
+    <option value="breakfast">Breakfast</option>
+    <option value="Lunch">Lunch</option>
+    <option value="Dinner">Dinner</option>
+    <option value="Snack">Snack</option>
+    <option value="Teatime">Teatime</option>
+  </select>
+</form>
+
+<input type="submit" name="confirm foods" onclick="search_recipes()">
+<input type="submit" name="confirm foods" onclick="random_recipes()">
+<p id="q"></p>
+</body>
+</html>

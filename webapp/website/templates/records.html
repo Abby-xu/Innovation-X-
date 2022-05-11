@@ -14,7 +14,7 @@
 
 	<link rel="canonical" href="https://demo-basic.adminkit.io/" />
 
-	<title>Records | SDSP</title>
+	<title>Records | Sensitive Droplet Sensing</title>
 
 	<link id="mystylesheet", href="static/css/app.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
 		<nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar">
 					<a class="sidebar-brand" href="index.html">
-          <span class="align-middle">SDSP</span>
+          <span class="align-middle">Sensitive Droplet Sensing</span>
         </a>
 				<ul class="sidebar-nav">
 					<li class="sidebar-header">
@@ -93,7 +93,7 @@
 						<div class="card-body">
 							<div class="row">
 								<div class="col mt-0">
-									<h1 class="card-header text-black-50"><strong>placeholder</strong></h1>
+									<h1 class="card-header text-black-50"><strong>Input your records here</strong></h1>
 								</div>
 								<div class="col-auto">
 									<div class="stat text-primary">
@@ -101,8 +101,42 @@
 									</div>
 								  </div>
 							</div>
-						</div>
-					  </div>
+							<div class="row">
+								<div class="col-7">
+									&emsp; Location:
+									<input class="mx-auto" type="text" name="location" id="location">
+								</div>
+								<!-- <div class="col ms-n4">
+								  <!-- <input type="submit" name="get units" onclick="setup_unit_form()" id="get_unit_button"\> -->
+								  <!-- <button type="button" class="btn btn-primary" name="get units" id="get_unit_button" onclick="setup_unit_form()">Submit</button>
+								</div> -->
+							</div>
+								<!-- </p> -->
+									<!-- FoodId: -->
+									<!-- <p class="text-white" id="foodId">FoodId:</p> -->
+							<div class="row">
+								<p>
+									<br>
+									&emsp; Name: &emsp;
+									<input class="mx-auto" type="text" name="name">
+								</p>
+							</div>
+								<div class="row">
+									<!-- <select id="measure" name="measure"></select> -->
+									<div class="col-7">
+										<br>
+										<label> &emsp; Result: &ensp;  </label>
+										<input class="mx-auto" type="text" name="result">
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-7">
+										<br>
+										<button type="button" class="btn btn-primary" name="confirm" onclick="submit_records()">Submit</button>
+									</div>
+								</div>
+							</div>
+					  	</div>
 
 					  <div class="row">
 						<div class="col-12 d-flex">
@@ -119,17 +153,13 @@
 								</div>
 								</div>
 							</div>
-							<table class="table table-hover my-0 text-center" id="foodTable">
+							<table class="table table-hover my-0 text-center" id="recordTable">
 							  <thead>
 								<tr>
-								  <!-- <th scope="col">Food</th>
-								  <th scope="col">Calories</th>
-								  <th scope="col">Carbs</th>
-								  <th scope="col">Fats</th>
-								  <th scope="col">Protein</th>
-								  <th scope="col">Sodium</th>
-								  <th scope="col">Cholesterol</th> -->
-								  <th scope="col">The array</th>
+								  <th scope="col">Date</th>
+								  <th scope="col">Location</th>
+								  <th scope="col">Name</th>
+								  <th scope="col">Result</th>
 								</tr>
 							  </thead>
 							</table>
@@ -169,7 +199,7 @@
 					<div class="row text-muted">
 						<div class="col-6 text-start">
 							<p class="mb-0">
-								<a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>SDSP</strong></a> &copy;
+								<a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>Sensitive Droplet Sensing</strong></a> &copy;
 							</p>
 						</div>
 					</div>
@@ -181,65 +211,38 @@
 	<script src="{{ url_for('static', filename='js/app.js') }}"></script>
 
 	<script>
-		function addFood(cell_foodName,calorie,carb,fat,protein,sodium,cholesterol) {
+		function addRecord(date,location,name,result) {
 			var i = 1 ;
-			var row = foodTable.insertRow(i);
+			var row = recordTable.insertRow(i);
 			var cell1 = row.insertCell(0);
 			var cell2 = row.insertCell(1);
 			var cell3 = row.insertCell(2);
 			var cell4 = row.insertCell(3);
-			var cell5 = row.insertCell(4);
-			var cell6 = row.insertCell(5);
-			var cell7 = row.insertCell(6);
 			
-			
-			cell1.innerHTML = cell_foodName;
-			cell2.innerHTML = Math.round(calorie);
-			cell3.innerHTML = Math.round(carb);
-			cell4.innerHTML = Math.round(fat);
-			cell5.innerHTML = Math.round(protein);
-			cell6.innerHTML = Math.round(sodium);
-			cell7.innerHTML = Math.round(cholesterol);
+			cell1.innerHTML = date;
+			cell2.innerHTML = location;
+			cell3.innerHTML = name;
+			cell4.innerHTML = result;
 		}
-	</script>
-
-<script>
-	function initChangeDetection(form) {
-	  Array.from(form).forEach(el => el.dataset.origValue = el.value);
-	}
-	function formHasChanges(form) {
-	  return Array.from(form).some(el => 'origValue' in el.dataset && el.dataset.origValue !== el.value);
-	}
-	function submit_form(form_data,server_url){
+		function submit_form(form_data,server_url){
 		form_response={}
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", server_url,false);
+		console.log(xhr)
 		xhr.onload = function(event){ 
 			//alert("Success, server responded with: " + event.target.response); // raw response
 			//document.getElementById("auto_complete_list") 
-			//console.log(event.target.response);
+			// console.log(event.target.response);
 			form_response=JSON.parse(event.target.response);
 		}; 
 		// or onerror, onabort
 		xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 		xhr.send(JSON.stringify(form_data));
 		return form_response;
-	}
-	//update autocomplete list
-	async function set_auto_complete(){
-		var food_options=submit_form(
-		{
-			"name":document.getElementById("name").value,
-		},
-		"/nutrition/get_auto_complete"
-		)["response"].split("\n");
-	
-		option_html='';
-		//food_options.forEach(element => option_html+='<option value="'+element+'" onselect="option_clicked(\''+element+'\')"/>');
-		//food_options.forEach(element => option_html+='<option value="'+element+'" onselect="alert(\'hi\')"/>');
-		food_options.forEach(element => option_html+='<option value="'+element+'"/>');
-		document.getElementById("food_options").innerHTML=option_html;
-	}
+		}
+	</script>
+
+<script>
 
 	func_arr=[]
 	date_arr=[]
@@ -255,16 +258,9 @@
 				//console.log(cur_date_str)
 				setup_intake_table(day=1,date=date_arr[i])
 			})
-
-
+			
 			elements[i].addEventListener("click",func_arr[func_arr.length-1])
 		}
-
-		/*if(e.className=="flatpickr-day today selected"){
-			e.addEventListener("click",function(){setup_intake_table(1)});
-		}else{
-			e.addEventListener("click",function(){setup_intake_table(0)});
-		}*/
 
 	}
 
@@ -281,82 +277,40 @@
 				"day":day,
 				"date":date,
 			},
-			"/nutrition/get_analysis"
+			"/records/get_analysis"
 		)
+		console.log(response)
 		
-		document.getElementById("foodTable").innerHTML='<thead> <tr> <th scope="col">x</th> <th scope="col">y</th> <th scope="col">z</th> <th scope="col">a</th> <th scope="col">b</th> <th scope="col">c</th> <th scope="col">d</th> </tr> </thead>'
-		//addFood(name,calorie,carb,fat,protein,sodium,cholesterol) {
-		response["data"].forEach(element=>addFood(
-			element["food_name"],
-			element["calorie"],
-			element["carb"],
-			element["fat"],
-			element["protein"],
-			element["sodium"],
+		document.getElementById("recordTable").innerHTML='<thead> <tr> <th scope="col">Date</th> <th scope="col">Location</th> <th scope="col">Name</th> <th scope="col">Result</th>  </tr> </thead>'
+		response["data"].forEach(element=>addRecord(
+			element["date"],
+			element["location"],
+			element["name"],
+			element["result"],
 			0
 		))
 		setTimeout(add_all_calendar_action,1000)
 		console.log(response)
 	}
 	
-	//constantly pull food auto complete into food bar
-	async function setup_auto_complete(){
-		initChangeDetection(document.getElementById('food_name_form'));
-		while(true){
-			if(formHasChanges(document.getElementById('food_name_form'))){
-				//console.log("changed");
-				initChangeDetection(document.getElementById('food_name_form'));
-				await set_auto_complete();
-			}
-			await new Promise(resolve => setTimeout(resolve, 500));
-		}
-	}
-	
-	async function setup_unit_form(){
-		//console.log(document.getElementById("name").value)
-		var quantity_label_resp=submit_form(
+
+	async function submit_records(){
+		console.log(document.getElementById("location").value)
+		var location = document.getElementById("location").value;
+		console.log(document.getElementById("name").value)
+		var name = document.getElementById("name").value;
+		console.log(document.getElementById("result").value)
+		var result = document.getElementById("result").value;
+		var records=submit_form(
 			{
-				"name":document.getElementById("name").value,
+				"location":location,
+				"name":name,
+				"result":result,
 			},
-			"/nutrition/get_quantity_label"
+			"/records/get_records"
 		);
-	
-		console.log(quantity_label_resp)
-		//fill food id into text field
-		document.getElementById("foodId").innerHTML=quantity_label_resp["foodId"]
-	
-		//remove all existing options
-		var select_box = document.getElementById("measure");
-		while (select_box.length > 0) {
-		  select_box.remove(select_box.length-1);
-		}
-		//add in new options
-		quantity_label_resp["measuers"].forEach(function(element){
-			var option = document.createElement("option");
-			option.text = element[0];
-			select_box.add(option,select_box.length)
-		})
-	
-		//update global variable unit to measureId map
-		unit_to_measureId={}
-		quantity_label_resp["measuers"].forEach(element=>
-			unit_to_measureId[element[0]]=element[1]
-		)
-	}
-	
-	async function submit_food_entry(){
-		var nutritions=submit_form(
-			{
-				"foodName":document.getElementById("name").value,
-				"foodId":document.getElementById("foodId").innerHTML,
-				"measure":unit_to_measureId[document.getElementById("measure").value],
-				"quantity":document.getElementById("quantity").value
-			},
-			"/nutrition/get_nutrition"
-		)
-		//document.getElementById("nutrition_output").innerHTML=JSON.stringify(nutritions);
 		setup_intake_table();
-		console.log(nutritions)
+		console.log(records)
 	}
 	function sleep(ms) {
 	  return new Promise(resolve => setTimeout(resolve, ms));
@@ -377,7 +331,7 @@
 		  
 		  
 
-		  setup_auto_complete();
+		//   setup_auto_complete();
 		  setup_intake_table();
 		  document.getElementsByClassName("flatpickr-next-month")[0].addEventListener("click",function(){setTimeout(add_all_calendar_action,200)})
 		  document.getElementsByClassName("flatpickr-prev-month")[0].addEventListener("click",function(){setTimeout(add_all_calendar_action,200)})
@@ -457,144 +411,7 @@
 			});
 		});
 	</script>
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			// Pie chart
-			new Chart(document.getElementById("chartjs-dashboard-pie"), {
-				type: "pie",
-				data: {
-					labels: ["Cups Drank", "Cups Remaining"],
-					datasets: [{
-						data: [5, 3],
-						backgroundColor: [
-							window.theme.primary,
-							window.theme.warning
-						],
-						borderWidth: 5
-					}]
-				},
-				options: {
-					responsive: !window.MSInputMethodContext,
-					maintainAspectRatio: false,
-					legend: {
-						display: false
-					},
-					cutoutPercentage: 75
-				}
-			});
-		});
-	</script>
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			// Bar chart
-			new Chart(document.getElementById("chartjs-dashboard-bar"), {
-				type: "bar",
-				data: {
-					labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-					datasets: [{
-						label: "This year",
-						backgroundColor: window.theme.primary,
-						borderColor: window.theme.primary,
-						hoverBackgroundColor: window.theme.primary,
-						hoverBorderColor: window.theme.primary,
-						data: [54, 67, 41, 55, 62, 45, 55, 73, 60, 76, 48, 79],
-						barPercentage: .75,
-						categoryPercentage: .5
-					}]
-				},
-				options: {
-					maintainAspectRatio: false,
-					legend: {
-						display: false
-					},
-					scales: {
-						yAxes: [{
-							gridLines: {
-								display: false
-							},
-							stacked: false,
-							ticks: {
-								stepSize: 20
-							}
-						}],
-						xAxes: [{
-							stacked: false,
-							gridLines: {
-								color: "transparent"
-							}
-						}]
-					}
-				}
-			});
-		});
-	</script>
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			var markers = [{
-					coords: [31.230391, 121.473701],
-					name: "Shanghai"
-				},
-				{
-					coords: [28.704060, 77.102493],
-					name: "Delhi"
-				},
-				{
-					coords: [6.524379, 3.379206],
-					name: "Lagos"
-				},
-				{
-					coords: [35.689487, 139.691711],
-					name: "Tokyo"
-				},
-				{
-					coords: [23.129110, 113.264381],
-					name: "Guangzhou"
-				},
-				{
-					coords: [40.7127837, -74.0059413],
-					name: "New York"
-				},
-				{
-					coords: [34.052235, -118.243683],
-					name: "Los Angeles"
-				},
-				{
-					coords: [41.878113, -87.629799],
-					name: "Chicago"
-				},
-				{
-					coords: [51.507351, -0.127758],
-					name: "London"
-				},
-				{
-					coords: [40.416775, -3.703790],
-					name: "Madrid "
-				}
-			];
-			var map = new jsVectorMap({
-				map: "world",
-				selector: "#world_map",
-				zoomButtons: true,
-				markers: markers,
-				markerStyle: {
-					initial: {
-						r: 9,
-						strokeWidth: 7,
-						stokeOpacity: .4,
-						fill: window.theme.primary
-					},
-					hover: {
-						fill: window.theme.primary,
-						stroke: window.theme.primary
-					}
-				},
-				zoomOnScroll: false
-			});
-			window.addEventListener("resize", () => {
-				map.updateSize();
-			});
-		});
-	</script>
+
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
 			var date = new Date(Date.now() * 24 * 60 * 60 * 1000);

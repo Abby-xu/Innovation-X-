@@ -1,0 +1,11 @@
+create table intake(
+	user_id varchar,
+	intake_date varchar,
+	food_name varchar,
+	calorie varchar,
+	carb varchar,
+	fat varchar,
+	protein varchar,
+	sodium varchar
+)
+insert into intake (user_id, food_name, calorie, carb, fat, protein, sodium) values('-1','-1','-1','-1','-1','-1','-1')
