@@ -118,7 +118,7 @@
 								<p>
 									<br>
 									&emsp; Name: &emsp;
-									<input class="mx-auto" type="text" name="name">
+									<input class="mx-auto" type="text" name="name" id="name">
 								</p>
 							</div>
 								<div class="row">
@@ -126,7 +126,7 @@
 									<div class="col-7">
 										<br>
 										<label> &emsp; Result: &ensp;  </label>
-										<input class="mx-auto" type="text" name="result">
+										<input class="mx-auto" type="text" name="result" id="result">
 									</div>
 								</div>
 								<div class="row">
@@ -224,21 +224,23 @@
 			cell3.innerHTML = name;
 			cell4.innerHTML = result;
 		}
+	</script>
+	<script>
 		function submit_form(form_data,server_url){
-		form_response={}
-		var xhr = new XMLHttpRequest();
-		xhr.open("POST", server_url,false);
-		console.log(xhr)
-		xhr.onload = function(event){ 
-			//alert("Success, server responded with: " + event.target.response); // raw response
-			//document.getElementById("auto_complete_list") 
-			// console.log(event.target.response);
-			form_response=JSON.parse(event.target.response);
-		}; 
-		// or onerror, onabort
-		xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-		xhr.send(JSON.stringify(form_data));
-		return form_response;
+			form_response={}
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", server_url,false);
+			// console.log(xhr)
+			xhr.onload = function(event){ 
+				//alert("Success, server responded with: " + event.target.response); // raw response
+				//document.getElementById("auto_complete_list") 
+				// console.log(event.target.response);
+				form_response=JSON.parse(event.target.response);
+			}; 
+			// or onerror, onabort
+			xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			xhr.send(JSON.stringify(form_data));
+			return form_response;
 		}
 	</script>
 
@@ -295,17 +297,17 @@
 	
 
 	async function submit_records(){
-		console.log(document.getElementById("location").value)
-		var location = document.getElementById("location").value;
-		console.log(document.getElementById("name").value)
-		var name = document.getElementById("name").value;
-		console.log(document.getElementById("result").value)
-		var result = document.getElementById("result").value;
+		// console.log(document.getElementById("location").value)
+		// var location = document.getElementById("location").value;
+		// console.log(document.getElementById("name").value)
+		// var name = document.getElementById("name").value;
+		// console.log(document.getElementById("result").value)
+		// var result = document.getElementById("result").value;
 		var records=submit_form(
 			{
-				"location":location,
-				"name":name,
-				"result":result,
+				"location":document.getElementById("location").value,
+				"name":document.getElementById("name").value,
+				"result":document.getElementById("result").value,
 			},
 			"/records/get_records"
 		);

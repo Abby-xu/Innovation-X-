@@ -3,7 +3,7 @@ from datetime import date
 from datetime import timedelta
 from datetime import datetime
 
-def record_intake(user_id,date,location, name, result):
+def record_intake(user_id,location, name, result):
 	conn = psycopg2.connect(
 	    host="ec2-52-86-123-180.compute-1.amazonaws.com",
 	    port="5432",
@@ -53,4 +53,4 @@ def get_past_intake_days(user_id,day=1,end_date=''):
 	}
 	return response
 
-# print(get_past_intake_days("27",day=1,end_date='May 2, 2022'))
+# record_intake(27, "home", "aaa", "positive")

@@ -139,12 +139,16 @@ def get_analysis():
 @views.route("/records/get_records",methods=['POST'])
 def get_records():
     my_request=request.json
-    print(my_request)
+    print(my_request, current_user.id)
+    print(str(my_request['location']),
+        str(my_request['name']),
+        str(my_request['result']))
     # response= nutrition_utils.get_nutrition(str(my_request['foodId']),str(my_request['measure']),int(my_request['quantity']))
     
     record_intake(
         current_user.id,
-        my_request['location'],
-        my_request['name'],
-        my_request['result'],
+        str(my_request['location']),
+        str(my_request['name']),
+        str(my_request['result'])
     )
+    return request
